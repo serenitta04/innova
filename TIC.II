@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecosistema de Innovación y Tendencias Educativas</title>
+    <style>
+        /* ==========================================================================
+           1. SISTEMA DE DISEÑO & VARIABLES CORPORATIVAS (PREMIUM)
+           ========================================================================== */
+        :root {
+            --bg-dark: #0F172A;
+            --primary: #2563EB;
+            --accent: #38BDF8;
+            --white: #FFFFFF;
+            --bg-light: #F8FAFC;
+            --text-muted: #64748B;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* ==========================================================================
+           2. CONFIGURACIÓN BASE & RESETS
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--bg-light);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        /* Lienzo del Motor de Partículas */
+        #hero-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .main-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ==========================================================================
+           3. MENÚ DE NAVEGACIÓN FLOTANTE ELEGANTE
+           ========================================================================== */
+        .premium-nav {
+            position: sticky;
+            top: 1.5rem;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.6rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+            list-style: none;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-btn:hover, .nav-btn.active-tab {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ==========================================================================
+           4. SECCIONES ASÍNCRONAS (SPA TRANSITIONS)
+           ========================================================================== */
+        .content-section {
+            display: none;
+            padding: 5rem 0 7rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .content-section.active-section {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           5. DISEÑO DE ELEMENTOS GRÁFICOS (HERO & PORTADA)
+           ========================================================================== */
+        .hero-container {
+            text-align: center;
+            padding: 7rem 1rem 5rem 1rem;
+        }
+
+        .academy-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(38, 189, 248, 0.2);
+            color: var(--accent);
+            padding: 0.4rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero-container h1 {
+            font-size: clamp(2.5rem, 5.5vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-container p {
+            font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            color: var(--text-muted);
+        }
+
+        .btn-action {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            background: #1d4ed8;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
+
+        /* Titles */
+        .section-header {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ==========================================================================
+           6. GRID DE TARJETAS INFORMATIVAS
+           ========================================================================== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .premium-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .premium-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card-num {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .premium-card h3 {
+            font-size: 1.4rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .premium-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           7. INFOGRAFÍA DE PROCESO INTEGRADA
+           ========================================================================== */
+        .infographic-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .info-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: space-between;
+        }
+
+        .flow-node {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .node-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .node-indicator {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            color: var(--white);
+            background: var(--bg-dark);
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .node-top h4 {
+            font-size: 1.15rem;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .flow-node p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           8. TABLA / CUADRO COMPARATIVO ACADÉMICO
+           ========================================================================== */
+        .table-scroller {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--card-bg);
+        }
+
+        .academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .academic-table th, .academic-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .academic-table th {
+            background: rgba(255,255,255,0.01);
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .academic-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+        }
+
+        /* ==========================================================================
+           9. REPOSITORIO MULTIMEDIA AVANZADO
+           ========================================================================== */
+        .media-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .media-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .media-display {
+            height: 180px;
+            background: #090d16;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            border: 1px dashed rgba(255,255,255,0.03);
+        }
+
+        .media-symbol {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .btn-outline {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--accent);
+        }
+
+        /* ==========================================================================
+           10. ACTIVIDAD INTERACTIVA: ESCAPE ROOM ACADÉMICO
+           ========================================================================== */
+        .escape-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 24px;
+            padding: 3.5rem 2.5rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .room-stage {
+            display: none;
+        }
+
+        .room-stage.active-stage {
+            display: block;
+        }
+
+        .room-input {
+            width: 100%;
+            background: #090d16;
+            border: 1px solid var(--border);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            color: var(--white);
+            font-size: 1rem;
+            margin: 1.5rem 0;
+            transition: border-color 0.3s;
+        }
+
+        .room-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-accent {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-accent:hover {
+            background: #1d4ed8;
+        }
+
+        /* ==========================================================================
+           11. FOOTER INSTITUCIONAL
+           ========================================================================== */
+        .academic-footer {
+            border-top: 1px solid var(--border);
+            padding: 4rem 0;
+            margin-top: 6rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsividad Dinámica */
+        @media (max-width: 900px) {
+            .premium-nav { flex-direction: column; gap: 1rem; border-radius: 16px; padding: 1rem; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+            .escape-wrapper { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Red de Partículas de Fondo Estilo Tecnológico -->
+    <canvas id="hero-canvas"></canvas>
+
+    <div class="main-wrapper">
+        
+        <!-- Navegación de Arquitectura Avanzada -->
+        <header>
+            <nav class="premium-nav">
+                <div class="nav-logo">INNOVA<span>.</span>ED</div>
+                <ul class="nav-links">
+                    <li><button id="tab-inicio" class="nav-btn active-tab" onclick="switchView('inicio')">Inicio</button></li>
+                    <li><button id="tab-ejes" class="nav-btn" onclick="switchView('ejes')">Ejes Tecnológicos</button></li>
+                    <li><button id="tab-matriz" class="nav-btn" onclick="switchView('matriz')">Análisis Comparativo</button></li>
+                    <li><button id="tab-medios" class="nav-btn" onclick="switchView('medios')">Repositorio Medios</button></li>
+                    <li><button id="tab-escape" class="nav-btn" onclick="switchView('escape')">Escape Room</button></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- SECCIÓN 1: INICIO & PORTADA -->
+            <section id="view-inicio" class="content-section active-section">
+                <div class="hero-container">
+                    <div class="academy-badge">Paradigma Educativo Global</div>
+                    <h1>El Futuro del Diseño<br>Instruccional y la Pedagogía</h1>
+                    <p>Una inmersión científica dentro de las tendencias metodológicas de próxima generación que transforman el ecosistema del aula y la asimilación del conocimiento.</p>
+                    <button class="btn-action" onclick="switchView('ejes')">Comenzar Análisis</button>
+                </div>
+
+                <!-- Infografía Modular Nv. Institucional -->
+                <div class="infographic-box">
+                    <h3 style="color: var(--white); font-size: 1.4rem; margin-bottom: 2rem; font-weight: 600;">Línea de Evolución Pedagógica</h3>
+                    <div class="info-flow">
+                        <div class="flow-node">
+                            <div class="node-top">
+                                <div class="node-indicator">01</div>
+                                <h4>Estructura Lineal</h4>
+                            </div>
+                            <p>Modelos tradicionales basados en plataformas estáticas, aprendizaje pasivo y métricas homogéneas.</p>
+                        </div>
+                        <div class="flow-node">
+                            <div class="node-top">
+                                <div class="node-indicator">02</div>
+                                <h4>Inmersión Espacial</h4>
+                            </div>
+                            <p>Integración curricular de laboratorios simulados virtuales donde se suprime el riesgo físico y de coste.</p>
+                        </div>
+                        <div class="flow-node">
+                            <div class="node-top">
+                                <div class="node-indicator">03</div>
+                                <h4>Arquitectura Adaptativa</h4>
+                            </div>
+                            <p>Sistemas analíticos avanzados y personalización algorítmica predictiva en tiempo real.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: EJES TECNOLÓGICOS -->
+            <section id="view-ejes" class="content-section">
+                <div class="section-header">
+                    <div class="academy-badge">Dimensiones Críticas</div>
+                    <h2>Núcleos de Disrupción Tecnológica</h2>
+                </div>
+                
+                <div class="tech-grid">
+                    <div class="premium-card">
+                        <div class="card-num">CORE .01</div>
+                        <h3>Inteligencia Artificial</h3>
+                        <p>Plataformas que monitorizan mapas de calor cognitivo, generando adaptaciones de la ruta pedagógica e instrumentos evaluativos automáticos según las destrezas operativas del usuario.</p>
+                    </div>
+                    <div class="premium-card">
+                        <div class="card-num">CORE .02</div>
+                        <h3>Realidad Aumentada (AR)</h3>
+                        <p>Interacciones espaciales y capas volumétricas de información digital aplicadas al mundo tangible. Óptimo para ramas anatómicas, mecánicas y arquitectónicas.</p>
+                    </div>
+                    <div class="premium-card">
+                        <div class="card-num">CORE .03</div>
+                        <h3>Realidad Virtual (VR)</h3>
+                        <p>Entornos controlados de inmersión total que permiten entrenamientos intensivos de alta complejidad técnica y simulaciones abstractas conceptuales.</p>
+                    </div>
+                    <div class="premium-card">
+                        <div class="card-num">CORE .04</div>
+                        <h3>Gamificación Estructural</h3>
+                        <p>Diseño basado en ciencias del comportamiento, bucles lúdicos de incentivo continuo e historias inmersivas para el incremento de la tasa de retención del conocimiento.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: MATRIZ COMPARATIVA -->
+            <section id="view-matriz" class="content-section">
+                <div class="section-header">
+                    <div class="academy-badge">Datos Basados en Evidencia</div>
+                    <h2>Matriz de Viabilidad e Impacto Metodológico</h2>
+                </div>
+
+                <div class="table-scroller">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Vector Curricular</th>
+                                <th>Curva de Implementación</th>
+                                <th>Eficiencia Cognitiva</th>
+                                <th>Viabilidad Financiera</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--white); font-weight: 500;">IA Adaptativa</td>
+                                <td>Baja (Integración de Software)</td>
+                                <td><span class="badge-status">Máxima (94%)</span></td>
+                                <td>Escalable / Media</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--white); font-weight: 500;">Simulación Inmersiva (XR)</td>
+                                <td>Media / Alta</td>
+                                <td><span class="badge-status">Excelente (89%)</span></td>
+                                <td>Inversión Alta (Hardware)</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--white); font-weight: 500;">Gamificación por Competencia</td>
+                                <td>Media</td>
+                                <td><span class="badge-status">Alta (79%)</span></td>
+                                <td>Baja / Moderada</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="premium-card" style="margin-top: 3rem; border-left: 4px solid var(--primary);">
+                    <h3 style="color: var(--white);">Tendencia Emergente: El Fenómeno del Microlearning</h3>
+                    <p>Los ciclos tradicionales de retención de atención se han reconfigurado radicalmente. Las instituciones de vanguardia migran hacia los 'Nanogrados' o cápsulas modulares de conocimiento, permitiendo una rápida inserción laboral y una actualización técnica ultra-enfocada en competencias críticas específicas.</p>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 4: REPOSITORIO MULTIMEDIA -->
+            <section id="view-medios" class="content-section">
+                <div class="section-header">
+                    <div class="academy-badge">Media Hub</div>
+                    <h2>Recursos Didácticos Multi-Formato</h2>
+                </div>
+
+                <div class="media-container">
+                    <div class="media-item">
+                        <div class="media-display">
+                            <div class="media-symbol">📺</div>
+                            <span style="font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;">VIDEO MAESTRO DIGITAL</span>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--white); font-size: 1.1rem; margin-bottom: 0.25rem;">Cátedra: Inteligencia Artificial en el Aula</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-muted)">Análisis crítico de los sesgos y modelos algorítmicos. (15 min)</p>
+                        </div>
+                        <button class="btn-outline" onclick="alert('Iniciando reproductor de cátedra de forma segura.')">Cargar Video</button>
+                    </div>
+
+                    <div class="media-item">
+                        <div class="media-display">
+                            <div class="media-symbol">🎙️</div>
+                            <span style="font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;">AUDIO PODCAST INSTITUCIONAL</span>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--white); font-size: 1.1rem; margin-bottom: 0.25rem;">Conversaciones EdTech: Microlearning</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-muted)">Entrevista con directores de innovación de universidades élite. (12 min)</p>
+                        </div>
+                        <button class="btn-outline" onclick="alert('Accediendo al servidor de audio en alta resolución.')">Escuchar Podcast</button>
+                    </div>
+
+                    <div class="media-item">
+                        <div class="media-display">
+                            <div class="media-symbol">📊</div>
+                            <span style="font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;">SLIDEDECK / PRESENTACIÓN VECTORIAL</span>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--white); font-size: 1.1rem; margin-bottom: 0.25rem;">Presentación: Indicadores Globales 2026</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-muted)">Métricas duras sobre adopción y retención de tecnología educativa. (24 Diapositivas)</p>
+                        </div>
+                        <button class="btn-outline" onclick="alert('Desplegando contenedor interactivo de láminas vectoriales.')">Ver Presentación</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 5: ESCAPE ROOM INTERACTIVO -->
+            <section id="view-escape" class="content-section">
+                <div class="escape-wrapper">
+                    <div style="text-align: center; margin-bottom: 2.5rem;">
+                        <span style="color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">Evaluación Formativa</span>
+                        <h2 style="color: var(--white); margin-top: 0.5rem; font-size: 1.8rem;">Escape Room: Validación Operativa</h2>
+                        <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 0.5rem;">Resuelve las fases conceptuales para autenticar el perfil analítico.</p>
+                    </div>
+
+                    <!-- Fase 1 -->
+                    <div id="stage-1" class="room-stage active-stage">
+                        <h4 style="color: var(--white); font-weight: 600;">Desafío 1: Arquitectura de Realidad Unificada</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">¿Qué sigla de dos letras en mayúsculas engloba bajo un único término conceptual a la Realidad Virtual, Aumentada y Mixta?</p>
+                        <input type="text" id="ans-1" class="room-input" placeholder="Ingresa las siglas en mayúsculas">
+                        <button class="btn-accent" onclick="checkStage1()">Validar Entrada</button>
+                    </div>
+
+                    <!-- Fase 2 -->
+                    <div id="stage-2" class="room-stage">
+                        <h4 style="color: var(--white); font-weight: 600;">Desafío 2: Personalización Algorítmica</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">¿Qué pilar tecnológico se encarga del modelado predictivo del perfil cognitivo del alumno? (Dos palabras en minúscula, sin tildes)</p>
+                        <input type="text" id="ans-2" class="room-input" placeholder="Ingresa el concepto aquí">
+                        <button class="btn-accent" onclick="checkStage2()">Autenticar Sistema</button>
+                    </div>
+
+                    <!-- Éxito Final -->
+                    <div id="stage-success" class="room-stage" style="text-align: center;">
+                        <div style="font-size: 3.5rem; margin-bottom: 1rem;">⚙️</div>
+                        <h3 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 0.5rem;">Acreditación Verificada</h3>
+                        <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2rem;">Has resuelto correctamente las compuertas lógicas sobre tendencias educativas.</p>
+                        <button class="btn-outline" onclick="resetEscape()">Reiniciar Simulador</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="academic-footer">
+            <p>&copy; 2026 Ecosistema Avanzado de Educación y Transformación Digital. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- ==========================================================================
+       12. ARQUITECTURA LÓGICA JAVASCRIPT (ES6+ NATIVO)
+       ========================================================================== -->
+    <script>
+        /* --- 1. ENRUTADOR LOGICO INTERNO (SPA ROUTING EFFECT) --- */
+        function switchView(viewId) {
+            // Desactivar secciones previas
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            // Desactivar estado del menú
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active-tab');
+            });
+
+            // Activar nuevos elementos de la interfaz
+            document.getElementById(`view-${viewId}`).classList.add('active-section');
+            document.getElementById(`tab-${viewId}`).classList.add('active-tab');
+
+            // Posicionamiento de scroll suave institucional
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* --- 2. MOTOR GRÁFICO DE NODOS (CANVAS NETWORK) --- */
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let totalParticles = [];
+        const maxParticlesCount = 60;
+
+        function adaptCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', adaptCanvasSize);
+        adaptCanvasSize();
+
+        class NetworkParticle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 1.5 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < maxParticlesCount; i++) {
+            totalParticles.push(new NetworkParticle());
+        }
+
+        function executionLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < totalParticles.length; i++) {
+                totalParticles[i].update();
+                totalParticles[i].draw();
+                
+                // Cálculo de enlaces de proximidad de redes
+                for (let j = i + 1; j < totalParticles.length; j++) {
+                    let dx = totalParticles[i].x - totalParticles[j].x;
+                    let dy = totalParticles[i].y - totalParticles[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(totalParticles[i].x, totalParticles[i].y);
+                        ctx.lineTo(totalParticles[j].x, totalParticles[j].y);
+                        ctx.strokeStyle = `rgba(37, 99, 235, ${0.12 - (distance / 130) * 0.12})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(executionLoop);
+        }
+        executionLoop();
+
+        /* --- 3. PROCESAMIENTO DE ESTADOS: ESCAPE ROOM ACADÉMICO --- */
+        function checkStage1() {
+            const val = document.getElementById('ans-1').value.trim().toUpperCase();
+            if (val === "XR") {
+                document.getElementById('stage-1').classList.remove('active-stage');
+                document.getElementById('stage-2').classList.add('active-stage');
+            } else {
+                alert("Código incorrecto. Consejo analítico: Corresponde a las siglas de Realidad Extendida.");
+            }
+        }
+
+        function checkStage2() {
+            const val = document.getElementById('ans-2').value.trim().toLowerCase();
+            if (val.includes("inteligencia artificial")) {
+                document.getElementById('stage-2').classList.remove('active-stage');
+                document.getElementById('stage-success').classList.add('active-stage');
+            } else {
+                alert("Validación errónea. Pista: Es el motor algorítmico adaptativo central.");
+            }
+        }
+
+        function resetEscape() {
+            document.getElementById('ans-1').value = "";
+            document.getElementById('ans-2').value = "";
+            document.getElementById('stage-success').classList.remove('active-stage');
+            document.getElementById('stage-2').classList.remove('active-stage');
+            document.getElementById('stage-1').classList.add('active-stage');
+        }
+    </script>
+</body>
+</html>
